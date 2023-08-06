@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}Shri{% endblock %}</title>
+    <title>{% block title %}Shri{% endblock title %}</title>
     {%block fonts%}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,20 +12,19 @@
       href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    {%endblock%}
-    <link rel="icon" type="image/x-icon" href="static/images/Shri_Favicon.png" sizes="32x32">
+    {%endblock fonts%}
 
     {% block stylesheets %}
-    {% endblock %}
+    {% endblock stylesheets %}
 
     {% block scripts %}
-    {% endblock %}
+    {% endblock scripts %}
   </head>
-{% endblock %} 
+{% endblock head%} 
 
 
 {% block content %}
   <body>
   </body>
-{% endblock %}
+{% endblock content %}
 </html>

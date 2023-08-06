@@ -2,13 +2,14 @@
 {%block title%}API Documentation - Shri{%endblock%}
 
 {%block stylesheets%}
-    <link rel="stylesheet" href="static/css/apidoc.css">
+   <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='images/Shri_Favicon.png')}}" sizes="32x32">
+   <link rel="stylesheet" href="static/css/apidoc.css">
 {%endblock%}
 
 
 {%block content%}
 <body>
-  <div class="logo"><a href="/"><img src="static/images/Shri_Colourful.png" alt="Shri Logo"></a></div>
+  <div class="logo"><a href="/"><img src="{{url_for('static', filename='images/Shri_Colourful.png')}}" alt="Shri Logo"></a></div>
 
   <h1>API Documentation</h1>
 

@@ -6,7 +6,8 @@
   type="text/css"
   href="{{url_for('static', filename='css/home.css')}}"
 />
-{%endblock%} 
+<link rel="icon" type="image/x-icon" href="{{url_for('static', filename='images/Shri_Favicon.png')}}" sizes="32x32">
+{%endblock %} 
 
 {%block content%}
 <body>
@@ -16,7 +17,7 @@
   </div>
   <div class="container-body">
     <img
-      src="static\images\Shri_Colourful.png"
+      src="{{url_for('static', filename='images/Shri_Colourful.png')}}"
       alt="Shri's Logo"
       class="logo"
     />
