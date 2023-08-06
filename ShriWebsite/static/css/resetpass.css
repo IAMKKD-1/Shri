@@ -1,0 +1,81 @@
+body {
+  font-family: "Rubik", sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 150px;
+  background-color: #000000;
+  color: white;
+}
+
+.logo a img {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  top: 20px;
+  left: 30px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-container {
+  margin: 40px auto;
+  max-width: 400px;
+  padding: 20px;
+  background-color: black;
+  border-radius: 5px;
+}
+
+.form-container label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.form-container input[type="email"],
+.form-container input[type="text"],
+.form-container input[type="password"] {
+  width: 95%;
+  padding: 10px;
+  border: 1px solid #c0c0c0;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.form-container button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #fda700;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.form-container button:hover {
+  background-color: black;
+  border: 2px solid white;
+  color: white;
+}
+
+.resend-pass {
+  font-size: 14px;
+  color: #c0c0c0;
+}
+
+.resend-pass a {
+  color: #ffaa00;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.resend-pass a:hover {
+  color: black;
+}

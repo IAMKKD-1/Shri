@@ -1,0 +1,44 @@
+{%extends 'base.html'%}
+
+{%block title%}Signup - Shri{%endblock%}
+
+{%block stylesheets%}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{{url_for('static', filename='css/signup.css')}}"
+/>
+{%endblock%}
+
+{%block content%}
+<body>
+    <div class="logo"><a href="/"><img src="{{url_for('static', filename='images/Shri_Colourful.png')}}" alt="Shri Logo"></a></div>
+    <div class="container">
+        <h2 class="form-title">Create an Account</h2>
+        <form class="signup-form" method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+            </div>
+            <button class="google-button">Google</button>
+            <button type="submit" class="submit-button">Sign Up</button>
+            {% if error_message %}
+            <p class="error-message">{{ error_message }}</p>
+            {% endif %}
+        </form>
+        <p class="login-link">Already have an account? <a href="/auth/login">Log in</a></p>
+    </div>
+</body>
+{%endblock%}
