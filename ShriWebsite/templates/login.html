@@ -13,8 +13,9 @@
 
 {%block content%}
 <body>
-    <div class="logo"><a href="/"><img src="{{url_for('static', filename='images/Shri_Colourful.png')}}" alt="Shri Logo"></a></div>
+    <div class="logo-text"><a href="/">ShriAI</a></div>
     <div class="container">
+        <img class="logo" src="{{url_for('static', filename='images/Shri_Colourful.png')}}" alt="Shri Logo">
         <h2 class="form-title">Log In</h2>
         <form class="login-form" method="POST">
             <div class="form-group">

@@ -1,0 +1,43 @@
+{%extends 'base.html'%} {%block title%}Chat - Shri{%endblock%} {%block
+stylesheets%}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{{url_for('static', filename='css/shri.css')}}"
+/>
+<link
+  rel="icon"
+  type="image/x-icon"
+  href="{{url_for('static', filename='images/Shri_Favicon.png')}}"
+  sizes="32x32"
+/>
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{{url_for('static', filename='js/highlight/styles/atom-one-dark-reasonable.min.css')}}"
+/>
+{%endblock %} {%block content%}
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+          <h2>ShriAI</h2>
+        </div>
+        <div class="navbar-middle navbar-logo-container">
+          <img src="{{url_for('static', filename='images/Shri_Colourful.png')}}" alt="ShriAI Logo">
+        </div>
+        <div class="navbar-right">
+            <a class="api-button" href="/api">API</a>
+            <a class="logout-button" href="/auth/logout">Logout</a>
+          </div>
+      </nav>
+
+      <div class="chat-container">
+        <div class="messages">
+        </div>
+        <div class="input-container">
+          <input type="text" id="user-input" placeholder="Type your message" />
+          <button class="send-chat" id="send-button">Send</button>
+        </div>
+      </div>
+</body>
+{%endblock%}
