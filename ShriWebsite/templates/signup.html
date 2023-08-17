@@ -21,7 +21,8 @@ stylesheets%}
       alt="Shri Logo"
     />
     <h2 class="form-title">Create an Account</h2>
-    <form class="signup-form" method="post">
+    {% if not email %}
+    <form class="signup-form" method="POST">
       <div class="form-group">
         <label for="username">Username</label>
         <input
@@ -39,6 +40,23 @@ stylesheets%}
           id="email"
           name="email"
           placeholder="Enter your email address"
+          required
+        />
+      </div>
+      <button class="submit-button" type="submit">Send OTP</button>
+      {% if error_message %}
+      <p class="error-message">{{ error_message }}</p>
+      {% endif %}
+    </form>
+    {% else %}
+    <form class="signup-form" method="POST">
+      <div class="form-group">
+        <label for="otp">OTP:</label>
+        <input
+          type="text"
+          id="otp"
+          name="otp"
+          placeholder="Enter OTP"
           required
         />
       </div>
@@ -68,6 +86,10 @@ stylesheets%}
       <p class="error-message">{{ error_message }}</p>
       {% endif %}
     </form>
+    <p class="login-link">
+      Didn't Recieve OTP? <a href="/auth/resend-otp-signup">Resend OTP</a>
+    </p>
+    {% endif %}
     <p class="login-link">
       Already have an account? <a href="/auth/login">Log in</a>
     </p>

@@ -30,7 +30,7 @@ stylesheets%}
         <input
           type="email"
           id="email"
-          name="email"
+          name="reset-email"
           placeholder="Enter your email address"
           required
         />
@@ -64,14 +64,14 @@ stylesheets%}
         <input
           type="password"
           id="confirm_password"
-          name="confirm_password"
+          name="confirm-password"
           placeholder="Confirm your new password"
           required
         />
       </div>
       <button class="submit-button" type="submit">Submit</button>
     </form>
-    <p class="resend-pass"><a href="/auth/resend-otp">Resend OTP</a></p>
+    <p class="resend-pass"><a href="/auth/resend-otp-resetpass">Resend OTP</a></p>
     {% endif %}
   </div>
 </body>

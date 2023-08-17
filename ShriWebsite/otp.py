@@ -16,7 +16,7 @@ def send_otp_email(email):
     smtp_password = 'oqomnmejovkllbdh'
     sender_email = 'shri.ai.codegen@gmail.com'
     subject = 'Verification Code for Password Reset - Shri AI'
-    html_file_path = 'templates/otp.html'
+    html_file_path = 'ShriWebsite/templates/otp.html'
     
     with open(html_file_path, 'r') as f:
         html_content = f.read()

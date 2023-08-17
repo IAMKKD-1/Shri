@@ -1,9 +1,11 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, session, redirect
 
 views = Blueprint('views', __name__)
 
 @views.route('/')
 def home():
+    if session.get('logged_in') and session.get('username'):
+        return redirect('/shri')
     return render_template("home.html")
 
 @views.route('/shri')
