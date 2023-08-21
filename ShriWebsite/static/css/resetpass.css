@@ -78,6 +78,7 @@ input {
 .resend-pass {
   font-size: 14px;
   color: #c0c0c0;
+  margin-bottom: 4px;
 }
 
 .resend-pass a {

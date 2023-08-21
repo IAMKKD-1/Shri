@@ -2,18 +2,21 @@ from flask import Blueprint, render_template, request, redirect, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from .otp import send_otp_email
-from .models import create_database, create_table, insert_data, update_data, get_data
+from .models import create_table, insert_data, update_data, get_data
+import warnings
 
 auth = Blueprint('auth', __name__)
 
+# Ignoring warnings
+warnings.filterwarnings("ignore")
+
 # Creating databases and tables
-create_database()
 create_table(table='Users',
-            columns="""(id serial PRIMARY KEY,
-            username VARCHAR(50) NOT NULL UNIQUE,
-            email VARCHAR(100) NOT NULL UNIQUE,
-            password VARCHAR(100),
-            date_created TIMESTAMP)""")
+    columns="""(id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(100),
+    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP)""")
 
 # SignUp
 @auth.route('/signup', methods=['GET', 'POST'])
@@ -33,10 +36,12 @@ def signup():
                 if password == confirm_password:
                     hashed_password = generate_password_hash(
                         password, method='sha256')
-                    insert_query = f"""INSERT INTO Users (username, email, password, date_created)
-                    VALUES ('{username}', '{email}', '{hashed_password}', '{datetime.now()}')"""
-                    insert_data(insert_query)
-                    session.pop('email').pop('otp')
+                    insert_query = "INSERT INTO Users (username, email, password, date_created) " \
+                       "VALUES (%s, %s, %s, %s)"
+                    data = (username, email, hashed_password, datetime.now())
+                    insert_data(insert_query=insert_query, data=data)
+                    session.pop('email')
+                    session.pop('otp')
                     session['logged_in'] = True
                     return redirect('/shri')
                 else:
@@ -108,8 +113,9 @@ def reset_password():
 
                 if password == confirm_password:
                     hashed_password = generate_password_hash(password, method='sha256')
-                    update_query = f"""UPDATE Users SET password='{hashed_password}' WHERE email='{reset_email}'"""
-                    update_data(update_query)
+                    update_query = "UPDATE Users SET password = %s WHERE email = %s"
+                    data = (hashed_password, reset_email)
+                    update_data(update_query=update_query, data=data)
                     session.pop('reset_email')
                     session.pop('otp')
                     return redirect('/auth/login')
@@ -144,4 +150,10 @@ def resend_otp_signup():
 def resend_otp_resetpass():
     reset_email = session.get('reset_email')
     session['otp'] = send_otp_email(reset_email)
+    return redirect('/auth/reset-password')
+
+# Change Email
+@auth.route('/change-email')
+def change_email():
+    session.pop('reset_email')
     return redirect('/auth/reset-password')

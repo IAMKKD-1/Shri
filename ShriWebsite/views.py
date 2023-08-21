@@ -1,21 +1,51 @@
-from flask import Blueprint, render_template, session, redirect
+from flask import Blueprint, render_template, session, redirect, jsonify, request
+import random, html
 
 views = Blueprint('views', __name__)
+conversation = []
 
+# Home Page
 @views.route('/')
 def home():
     if session.get('logged_in') and session.get('username'):
         return redirect('/shri')
     return render_template("home.html")
 
-@views.route('/shri')
+# Chatbot Page
+@views.route('/shri', methods=['GET', 'POST'])
 def main():
-    return render_template("shri.html")
+    if session.get('logged_in') and session.get('username'):
+        if request.method == 'POST':
+            user_prompt = html.escape(request.form['message'])
+            response = html.escape('''@views.route('/api')
+def api_docs():
+    return render_template("apidoc.html")''')            
+            conversation.append({'user': user_prompt, 'response': response, 'is_code':random.choice([True, False])})
+        return render_template("shri.html", username= session.get('username'),conversation=conversation)
+    return redirect('/')
 
+# API Documentation
 @views.route('/api')
 def api_docs():
     return render_template("apidoc.html")
 
-@views.route('/api/<string:user_prompt>', methods=['GET'])
-def api():
-    pass
+# API
+@views.route('/api/<string:username>/<string:user_prompt>', methods=['GET'])
+def api(username, user_prompt):
+    
+    if user_prompt == '':
+        ai_response = 'No input provided'
+    else:
+        ai_response = 'This is a sample response'
+    response = {
+        'username': username,
+        'user_prompt': user_prompt,
+        'response': ai_response,
+    }
+    return jsonify(response)
+
+# Clear Chatbot
+@views.route('/clear')
+def clear():
+    conversation.clear()
+    return redirect('/shri')

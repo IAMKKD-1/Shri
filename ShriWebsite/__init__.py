@@ -1,7 +1,6 @@
 from flask import Flask
 import os
 
-
 def index():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = os.urandom(24)

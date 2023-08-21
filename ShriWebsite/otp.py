@@ -2,6 +2,16 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import random
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+smtp_server = os.environ.get('SMTP_SERVER')
+smtp_port = os.environ.get('SMTP_PORT')
+smtp_username = os.environ.get('SMTP_USERNAME')
+smtp_password = os.environ.get('SMTP_PASSWORD')
+sender_email = os.environ.get('SENDER_EMAIL')
 
 def otp_generator():
     otp = ''
@@ -10,11 +20,6 @@ def otp_generator():
     return otp    
 
 def send_otp_email(email):
-    smtp_server = 'smtp.gmail.com'
-    smtp_port = 587 
-    smtp_username = 'shri.ai.codegen@gmail.com'
-    smtp_password = 'oqomnmejovkllbdh'
-    sender_email = 'shri.ai.codegen@gmail.com'
     subject = 'Verification Code for Password Reset - Shri AI'
     html_file_path = 'ShriWebsite/templates/otp.html'
     

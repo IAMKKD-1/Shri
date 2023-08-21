@@ -1,5 +1,6 @@
-{%extends 'base.html'%} {%block title%}Chat - Shri{%endblock%} {%block
-stylesheets%}
+{%extends 'base.html'%}
+{%block title%}Chat - Shri{%endblock%} 
+{%block stylesheets%}
 <link
   rel="stylesheet"
   type="text/css"
@@ -14,30 +15,79 @@ stylesheets%}
 <link
   rel="stylesheet"
   type="text/css"
-  href="{{url_for('static', filename='js/highlight/styles/atom-one-dark-reasonable.min.css')}}"
+  href="{{url_for('static', filename='js/highlight/styles/tomorrow-night-bright.min.css')}}"
 />
-{%endblock %} {%block content%}
-<body>
-    <nav class="navbar">
-        <div class="navbar-left">
-          <h2>ShriAI</h2>
-        </div>
-        <div class="navbar-middle navbar-logo-container">
-          <img src="{{url_for('static', filename='images/Shri_Colourful.png')}}" alt="ShriAI Logo">
-        </div>
-        <div class="navbar-right">
-            <a class="api-button" href="/api">API</a>
-            <a class="logout-button" href="/auth/logout">Logout</a>
-          </div>
-      </nav>
+{%endblock %} 
+{%block scripts%}
+<script src="{{url_for('static', filename = 'js/shri.js')}}"></script>
+<script src="{{url_for('static', filename = 'js/highlight/highlight.min.js')}}"></script>
+<script>hljs.highlightAll();</script>
+{%endblock%}
 
-      <div class="chat-container">
-        <div class="messages">
-        </div>
-        <div class="input-container">
-          <input type="text" id="user-input" placeholder="Type your message" />
-          <button class="send-chat" id="send-button">Send</button>
-        </div>
+{%block content%}
+<body>
+  <!--Navigation-->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <div class="logo-text"><a href="/">ShriAI</a></div>
+    </div>
+    <div class="navbar-middle navbar-logo-container">
+      <img
+        src="{{url_for('static', filename='images/Shri_Colourful.png')}}"
+        alt="ShriAI Logo"
+      />
+    </div>
+    <div class="navbar-right">
+      <a class="api-button" href="/api">API</a>
+      <a class="logout-button" href="/auth/logout">Logout</a>
+    </div>
+  </nav>
+  <!--Chat Section-->
+  <div class="container">
+    <div class="chat-container">
+      <div class="message">
+        <span class="user">Shri:</span>
+        <span class="text">Ask me to create any function in Python...</span>
       </div>
+      {% for entry in conversation %}
+      <div class="message">
+        <span class="user">{{username}}: </span>
+        <span class="text"><pre>{{ entry['user'] | safe }}</pre></span>
+      </div>
+      <div class="message">
+        <span class="user">Shri:</span>
+        <span class="text">
+          {% if entry.is_code %}
+          <div class="code-block">
+            <pre
+              class="language-python"
+            ><code>{{ entry.response | safe }}</code></pre>
+          </div>
+          <button id="copy-button-{{ loop.index0 }}" class="copy-button" onclick="copyToClipboard('copy-button-{{ loop.index0 }}', '{{ entry.response | safe }}')">
+            Copy
+          </button>
+          {% else %}
+          <span class="text">{{ entry.response | safe }}</span>
+          {% endif %}
+        </span>
+      </div>
+      {% endfor %}
+    </div>
+    <form id="message-form" method="post">
+      <div class="input-container">
+        <textarea
+          id="message-input"
+          name="message"
+          placeholder="Type your message"
+          rows="1"
+          autofocus
+          onkeydown="handleTextareaKeyPress(event)"></textarea>
+        <button id="send-button" type="submit">Send</button>
+      </div>
+    </form>
+    <div class="button-container">
+      <a href="/clear" class="clear-button">Clear</a>
+    </div>
+  </div>
 </body>
 {%endblock%}
