@@ -47,8 +47,3 @@ def api(username, user_prompt):
 def clear():
     conversation.clear()
     return redirect('/shri')
-
-@views.route('/copy')
-def copy():
-    clipboard.copy(conversation[-1]['response'])
-    return redirect('/shri')
