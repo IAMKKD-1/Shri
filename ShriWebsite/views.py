@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, session, redirect, jsonify, request
 from .googlepalm import response_AI
-import clipboard
 
 views = Blueprint('views', __name__)
 conversation = []
