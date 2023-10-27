@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, session, redirect, jsonify, request
 from .googlepalm import response_AI
+import clipboard
 
 views = Blueprint('views', __name__)
 conversation = []
@@ -14,15 +15,12 @@ def home():
 # Chatbot Page
 @views.route('/shri', methods=['GET', 'POST'])
 def main():
-    if session.get('logged_in') and session.get('username'):
-        if request.method == 'POST':
-            user_prompt = request.form['message']
-            ai_response = response_AI(user_prompt)     
-            conversation.append({'user': user_prompt, 'response': ai_response, 'is_code': True})
-        return render_template("shri.html", username= session.get('username'),conversation=conversation)
-    return redirect('/')
+    if request.method == 'POST':
+        user_prompt = request.form['message']
+        ai_response = response_AI(user_prompt)     
+        conversation.append({'user': user_prompt, 'response': ai_response, 'is_code': True})
+    return render_template("shri.html", username= session.get('username'),conversation=conversation)
 
-# API Documentation
 @views.route('/api')
 def api_docs():
     return render_template("apidoc.html")
@@ -46,4 +44,9 @@ def api(username, user_prompt):
 @views.route('/clear')
 def clear():
     conversation.clear()
+    return redirect('/shri')
+
+@views.route('/copy')
+def copy():
+    clipboard.copy(conversation[-1]['response'])
     return redirect('/shri')
