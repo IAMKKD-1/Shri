@@ -7,18 +7,6 @@ window.addEventListener("load", function() {
   scrollToBottom();
 });
 
-// Copied Button
-function copyToClipboard(buttonId, code) {
-  const textArea = document.createElement("textarea");
-  textArea.value = code;
-  document.body.appendChild(textArea);
-  textArea.select();
-  document.execCommand("copy");
-  document.body.removeChild(textArea);
-  const copyButton = document.getElementById(buttonId);
-  copyButton.textContent = "Copied";
-}
-
 // Enter to submit message
 function handleTextareaKeyPress(event) {
   const messageForm = document.getElementById("message-form");

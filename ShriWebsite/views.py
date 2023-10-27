@@ -1,14 +1,15 @@
 from flask import Blueprint, render_template, session, redirect, jsonify, request
-import random, html
+from .googlepalm import response_AI
+import clipboard
 
 views = Blueprint('views', __name__)
 conversation = []
 
-# Home Page
 @views.route('/')
 def home():
     if session.get('logged_in') and session.get('username'):
         return redirect('/shri')
+    session.clear()
     return render_template("home.html")
 
 # Chatbot Page
@@ -16,11 +17,9 @@ def home():
 def main():
     if session.get('logged_in') and session.get('username'):
         if request.method == 'POST':
-            user_prompt = html.escape(request.form['message'])
-            response = html.escape('''@views.route('/api')
-def api_docs():
-    return render_template("apidoc.html")''')            
-            conversation.append({'user': user_prompt, 'response': response, 'is_code':random.choice([True, False])})
+            user_prompt = request.form['message']
+            ai_response = response_AI(user_prompt)     
+            conversation.append({'user': user_prompt, 'response': ai_response, 'is_code': True})
         return render_template("shri.html", username= session.get('username'),conversation=conversation)
     return redirect('/')
 
@@ -36,7 +35,7 @@ def api(username, user_prompt):
     if user_prompt == '':
         ai_response = 'No input provided'
     else:
-        ai_response = 'This is a sample response'
+        ai_response = response_AI(user_prompt)
     response = {
         'username': username,
         'user_prompt': user_prompt,
@@ -48,4 +47,9 @@ def api(username, user_prompt):
 @views.route('/clear')
 def clear():
     conversation.clear()
+    return redirect('/shri')
+
+@views.route('/copy')
+def copy():
+    clipboard.copy(conversation[-1]['response'])
     return redirect('/shri')
