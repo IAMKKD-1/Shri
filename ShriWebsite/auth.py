@@ -68,12 +68,12 @@ def login():
         password = request.form.get('password')
 
         existing_user = get_data(
-            f"SELECT * FROM Users WHERE username='{username}'")
+            f"SELECT * FROM Users WHERE username='{username}' or email='{username}'")
         if existing_user:
-            if existing_user[0][1] == username:
+            if existing_user[0][1] == username or existing_user[0][2] == username:
                 stored_hashed_password = existing_user[0][3]
                 if bcrypt.checkpw(password.encode('utf-8'), stored_hashed_password.encode('utf-8')):
-                    session['username'] = username
+                    session['username'] = existing_user[0][1]
                     session['logged_in'] = True
                     return redirect('/shri')
                 else:
