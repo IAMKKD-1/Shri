@@ -85,8 +85,7 @@ def login():
 # Logout
 @auth.route('/logout')
 def logout():
-    session['logged_in'] = False
-    session.pop('username')
+    session.clear()
     conversation.clear()
     return redirect('/')
 
