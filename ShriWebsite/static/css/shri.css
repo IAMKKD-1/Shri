@@ -165,7 +165,6 @@ body {
 
 .user{
   font-weight: 500;
-  color: #fcac00;
 }
 
 .code-block {
@@ -192,7 +191,7 @@ body {
 }
 
 .message {
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   font-size: 16px;
   word-wrap: break-word;
 }
