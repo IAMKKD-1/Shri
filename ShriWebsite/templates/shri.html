@@ -40,27 +40,27 @@
     <div class="chat-container">
       <div class="message">
         <span class="user">Shri:</span>
-        <span class="text">Ask me to create any function in Python...</span>
+        <span class="text">Ask me any programming related queries...</span>
       </div>
       {% for entry in conversation %}
-      <div class="message">
-        <span class="user">{{username}}: </span>
-        <span class="text">{{ entry['user'] | safe }}</span>
-      </div>
+      {% if entry['role'] == 'user' %}
+        <div class="message">
+          <span class="user">{{username}}: </span>
+          <span class="text">{{ entry["parts"][0] | safe }}</span>
+        </div>
+      {% else %}
       <div class="message">
         <span class="user">Shri:</span>
         <span class="text">
-          {% if entry.is_code %}
           <div class="code-block">
             <pre
               class="language-python"
-            ><code>{{ entry.response | safe }}</code></pre>
-          </div>      
-          {% else %}
-          <span class="text">{{ entry.response | safe }}</span>
-          {% endif %}
+            ><code>{{ entry["parts"][0] | safe }}</code></pre>
+          </div>
+          <a class="copy-button" href="/copy">Copy</a>       
         </span>
       </div>
+      {% endif %}
       {% endfor %}
     </div>
     <form id="message-form" method="post">
